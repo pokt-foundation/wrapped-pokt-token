@@ -52,8 +52,8 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
   })
 
   it('set up the token correctly', async () => {
-    assert.equal(await wpokt.name(), 'Aragon Network Token', 'token: name')
-    assert.equal(await wpokt.symbol(), 'wpokt', 'token: symbol')
+    assert.equal(await wpokt.name(), 'Wrapped POKT Token', 'token: name')
+    assert.equal(await wpokt.symbol(), 'wPOKT', 'token: symbol')
     assert.equal(await wpokt.decimals(), '18', 'token: decimals')
 
     assertBn(await wpokt.totalSupply(), tokenAmount(300))

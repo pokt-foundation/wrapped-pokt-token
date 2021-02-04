@@ -14,8 +14,8 @@ contract wPOKT is IERC20 {
 
     // bytes32 private constant EIP712DOMAIN_HASH = keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)")
     bytes32 private constant EIP712DOMAIN_HASH = 0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f;
-    // bytes32 private constant NAME_HASH = keccak256("Aragon Network Token")
-    bytes32 private constant NAME_HASH = 0x711a8013284a3c0046af6c0d6ed33e8bbc2c7a11d615cf4fdc8b1ac753bda618;
+    // bytes32 private constant NAME_HASH = keccak256("Wrapped POKT Token")
+    bytes32 private constant NAME_HASH = 0xd2f3f5df51431a675641d6aa180b32970a0196c91b0371b5256c844969764283;
     // bytes32 private constant VERSION_HASH = keccak256("1")
     bytes32 private constant VERSION_HASH = 0xc89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc6;
 
