@@ -6,11 +6,11 @@ on:
   pull_request:
     paths:
     - '*'
-    - 'packages/v2/**'
+    - 'packages/wPOKT/**'
 
 defaults:
   run:
-    working-directory: 'packages/v2'
+    working-directory: 'packages/wPOKT'
 
 jobs:
   CI:
