@@ -57,7 +57,7 @@ contract ANTv2MultiMinter {
 
     function _changeOwner(address newOwner) internal {
         owner = newOwner;
-        
+
         emit ChangedOwner(newOwner);
     }
 }
