@@ -36,11 +36,11 @@ Smart contracts and additional resources for the Wrapped POKT Token, forked from
 
 This repo contains the package for the wPOKT contract:
 
-- [`wPOKT`](packages/wPOKT): the latest wPOKT token contract. [Check it out](packages/v2/contracts/wPOKT.sol)
+- [`wPOKT`](packages/wPOKT): the latest wPOKT token contract. [Check it out](packages/wPOKT/contracts/wPOKT.sol)
 
 ## Important contract info
 
 ### wPOKT
 
-- [wPOKT.sol](packages/v2/contracts/wPOKT.sol): Main contract for the token. Lightweight and supports [ERC-2612](https://eips.ethereum.org/EIPS/eip-2612), [ERC-3009](https://eips.ethereum.org/EIPS/eip-3009), token mints, and token burns.
+- [wPOKT.sol](packages/wPOKT/contracts/wPOKT.sol): Main contract for the token. Lightweight and supports [ERC-2612](https://eips.ethereum.org/EIPS/eip-2612), [ERC-3009](https://eips.ethereum.org/EIPS/eip-3009), token mints, and token burns.
 
