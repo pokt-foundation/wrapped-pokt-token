@@ -17,22 +17,13 @@ yarn install
 yarn test
 ```
 
-This will compile the mocks in [`mocks/`](mocks/) and run the [unit tests](test/).
+This will run the [unit tests](test/).
 
 CI for this package is run through the [`ci_v2` Github action](../../.github/workflows/ci_v2.yml).
 
 ### Code style
 
 To limit changes, [`wPOKT.sol`](contracts/wPOKT.sol) carries over the code style of the original `ANTv2` codebase.
-
-## E2E tests
-
-[E2E tests](e2e) are performed through a Ganache-based fork of mainnet state. To run them:
-
-```sh
-FORK_NODE=<URL of mainnet RPC> yarn test:e2e:pre-deploy
-FORK_NODE=<URL of mainnet RPC> yarn test:e2e:post-deploy
-```
 
 ## Credits
 
