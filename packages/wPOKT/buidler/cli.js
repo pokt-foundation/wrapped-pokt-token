@@ -1,33 +1,23 @@
 const inquirer = require('inquirer')
 const { calculateContractAddress } = require('./utils')
 
-async function deploy({ antv1, owner }) {
+async function deploy({ owner }) {
   if (!web3.utils.isAddress(owner)) {
     console.log('Error: --owner must be an Ethereum address')
     return
   }
 
-  if (!web3.utils.isAddress(antv1)) {
-    console.log('Error: --antv1 must be an Ethereum address')
-    return
-  }
-
-  const ANTv2 = artifacts.require('ANTv2')
-  const ANTv2Migrator = artifacts.require('ANTv2Migrator')
+  const wPOKT = artifacts.require('wPOKT')
 
   const from = (await web3.eth.getAccounts())[0].toLowerCase()
   const currentNonce = await web3.eth.getTransactionCount(from)
-  const antv2Addr = calculateContractAddress(from, currentNonce)
-  const migratorAddr = calculateContractAddress(from, currentNonce + 1)
+  const wpoktAddr = calculateContractAddress(from, currentNonce)
 
-  console.log('Deploying ANTv2 and ANTv2Migrator...')
+  console.log('Deploying wPOKT')
   console.log()
-
   console.log('Deploying from address:', web3.utils.toChecksumAddress(from))
-  console.log('Migration owner:', web3.utils.toChecksumAddress(owner))
   console.log()
-  console.log('ANTv2 address:', web3.utils.toChecksumAddress(antv2Addr))
-  console.log('ANTv2Migrator address:', web3.utils.toChecksumAddress(migratorAddr))
+  console.log('wPOKT address:', web3.utils.toChecksumAddress(wpoktAddr))
   console.log()
 
   const { confirmed } = await inquirer.prompt([{
@@ -37,16 +27,12 @@ async function deploy({ antv1, owner }) {
   }])
 
   if (confirmed) {
-    await ANTv2.new(migratorAddr),
-    await ANTv2Migrator.new(owner, antv1, antv2Addr)
+    await wPOKT.new(migratorAddr)
 
-    const deployedANTv2 = await ANTv2.at(antv2Addr)
-    const deployedMigrator = await ANTv2Migrator.at(migratorAddr)
+    const deployedwPOKT = await wPOKT.at(wpoktAddr)
+
     console.log()
-    console.log('ANTv2 minter:', await deployedANTv2.minter())
-    console.log('ANTv2Migrator owner:', await deployedMigrator.owner())
-    console.log('ANTv2Migrator ANTv1:', await deployedMigrator.antv1())
-    console.log('ANTv2Migrator ANTv2:', await deployedMigrator.antv2())
+    console.log('wPOKT minter:', await deployedwPOKT.minter())
     console.log()
 
     console.log('Complete!')
