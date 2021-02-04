@@ -6,7 +6,7 @@
       Website
     </a>
     <span> | </span>
-    <a href="#">
+    <a href="https://forum.pokt.network/t/wpokt-green-paper/400">
       Documentation
     </a>
     <span> | </span>
@@ -29,7 +29,7 @@ Smart contracts and additional resources for the Wrapped POKT Token, forked from
 
 - ✅ wPOKT has not been deployed yet. Beware of any scams! As soon as the token gets deployed to Mainnet we will have the updated address here.
 - 🔍 Audits and security details are available in the [security policy](SECURITY.md)
-- 📚 Additional documentation and user guides are available [in the repo](docs/) or as a [Gitbook]()
+- 📚 Additional documentation and user guides are available on the [Green Paper](https://forum.pokt.network/t/wpokt-green-paper/400) 
 - Wanna learn more about Pocket Network? Check the [official website out](https://pokt.network/)
 
 ## Structure
