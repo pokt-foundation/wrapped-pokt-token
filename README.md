@@ -2,7 +2,7 @@
 
 <div align="center">
   <h4>
-    <a href="https://aragon.network">
+    <a href="https://pokt.network">
       Website
     </a>
     <span> | </span>
