@@ -54,7 +54,7 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
   it('set up the token correctly', async () => {
     assert.equal(await wpokt.name(), 'Wrapped POKT Token', 'token: name')
     assert.equal(await wpokt.symbol(), 'wPOKT', 'token: symbol')
-    assert.equal(await wpokt.decimals(), '18', 'token: decimals')
+    assert.equal(await wpokt.decimals(), '6', 'token: decimals')
 
     assertBn(await wpokt.totalSupply(), tokenAmount(300))
     assertBn(await wpokt.balanceOf(holder1), tokenAmount(100))
