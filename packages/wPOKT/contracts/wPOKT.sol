@@ -27,7 +27,7 @@ contract wPOKT is IERC20 {
 
     string public constant name = "Wrapped POKT Token";
     string public constant symbol = "wPOKT";
-    uint8 public constant decimals = 18;
+    uint8 public constant decimals = 6;
 
     address public minter;
     uint256 public totalSupply;
