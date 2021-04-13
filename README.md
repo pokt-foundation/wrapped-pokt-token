@@ -36,7 +36,7 @@ Smart contracts and additional resources for the Wrapped POKT Token, forked from
 
 This repo contains the package for the wPOKT contract:
 
-- [`wPOKT`](packages/wPOKT): the latest wPOKT token contract. [Check it out](packages/wPOKT/contracts/wPOKT.sol)
+- [`wPOKT`](packages/wPOKT): the latest wPOKT token contract. [Check it out!](packages/wPOKT/contracts/wPOKT.sol)
 
 ## Important contract info
 
