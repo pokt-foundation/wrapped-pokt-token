@@ -1,9 +1,9 @@
 const inquirer = require('inquirer')
 const { calculateContractAddress } = require('./utils')
 
-async function deploy({ owner }) {
-  if (!web3.utils.isAddress(owner)) {
-    console.log('Error: --owner must be an Ethereum address')
+async function deploy({ minter }) {
+  if (!web3.utils.isAddress(minter)) {
+    console.log('Error: --minter must be an Ethereum address')
     return
   }
 
@@ -27,7 +27,7 @@ async function deploy({ owner }) {
   }])
 
   if (confirmed) {
-    await wPOKT.new(migratorAddr)
+    await wPOKT.new(minter)
 
     const deployedwPOKT = await wPOKT.at(wpoktAddr)
 
