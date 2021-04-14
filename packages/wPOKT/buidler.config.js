@@ -6,7 +6,7 @@ usePlugin('@nomiclabs/buidler-truffle5')
 usePlugin('buidler-local-networks-config-plugin')
 
 task('deploy', 'Deploy wPOKT')
-  .addParam('owner', "wPOKT owner")
+  .addParam('minter', 'wPOKT minter')
   .setAction(deploy)
 
 module.exports = {
