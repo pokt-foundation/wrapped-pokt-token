@@ -4,7 +4,7 @@
   "description": "Wrapped POKT Token",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aragon/aragon-network-token.git"
+    "url": "https://github.com/pokt-foundation/wrapped-pokt-token.git"
   },
   "author": "Pocket Network <hola@pokt.network>",
   "license": "GPL-3.0-or-later",
@@ -32,10 +32,7 @@
   "scripts": {
     "abi:extract": "buidler-extract --output abi/ --keys abi",
     "compile": "buidler compile --force",
-    "compile:mocks": "buidler compile --config buidler.config.4.js",
-    "test": "yarn compile:mocks && buidler test",
-    "test:e2e:pre-deploy": "yarn compile:mocks && buidler --config buidler.config.e2e-pre.js --network ganache test e2e/test/pre-deploy-mainnet-fork.js",
-    "test:e2e:post-deploy": "yarn compile:mocks && buidler --config buidler.config.e2e-post.js --network ganache test e2e/test/post-deploy-mainnet-fork.js",
+    "test": "yarn compile && buidler test",
     "prepublishOnly": "yarn compile && yarn abi:extract -- --no-compile"
   }
 }
