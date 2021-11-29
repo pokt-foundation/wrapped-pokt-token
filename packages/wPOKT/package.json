@@ -4,7 +4,7 @@
   "description": "Wrapped POKT Token",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aragon/aragon-network-token.git"
+    "url": "https://github.com/pokt-foundation/wrapped-pokt-token.git"
   },
   "author": "Pocket Network <hola@pokt.network>",
   "license": "GPL-3.0-or-later",
