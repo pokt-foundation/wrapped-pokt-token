@@ -8,7 +8,7 @@ task('deploy', 'Deploy wPOKT')
   .addParam('minter', 'wPOKT minter')
   .setAction(deploy)
 
-const accounts = [process.env.DEV_PK]
+const accounts = process.env.DEV_PK ? [process.env.DEV_PK ?? ''] : []
 
 module.exports = {
   networks: {
