@@ -1,9 +1,4 @@
-const { types, usePlugin } = require('@nomiclabs/buidler/config')
 const { deploy } = require('./buidler/cli')
-
-usePlugin("@nomiclabs/buidler-ganache")
-usePlugin('@nomiclabs/buidler-truffle5')
-usePlugin('buidler-local-networks-config-plugin')
 
 task('deploy', 'Deploy wPOKT')
   .addParam('minter', 'wPOKT minter')
@@ -11,15 +6,6 @@ task('deploy', 'Deploy wPOKT')
 
 module.exports = {
   networks: {
-    // Local development network using ganache. You can set any of the
-    // Ganache's options. All of them are supported, with the exception
-    // of accounts.
-    // https://github.com/trufflesuite/ganache-core#options
-    ganache: {
-      url: 'http://localhost:8545',
-      gasLimit: 6000000000,
-      defaultBalanceEther: 100
-    },
     // Mainnet network configured with Aragon node.
     mainnet: {
       url: 'https://mainnet.eth.aragon.network',
@@ -28,19 +14,24 @@ module.exports = {
     rinkeby: {
       url: 'https://rinkeby.eth.aragon.network',
     },
+    kovan: {
+      url: 'https://poa-kovan.gateway.pokt.network/v1/lb/61a4bf7a541b7a0039f10001',
+    },
     // Network configured to interact with Frame wallet. Requires
     // to have Frame running on your machine. Download it from:
     // https://frame.sh
     frame: {
-      httpHeaders: { origin: 'buidler' },
+      httpHeaders: { origin: 'hardhat' },
       url: 'http://localhost:1248',
     }
   },
-  solc: {
+  solidity: {
     version: '0.5.17',
-    optimizer: {
-      enabled: true,
-      runs: 999999,
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 999999,
+      },
     },
   },
 }
