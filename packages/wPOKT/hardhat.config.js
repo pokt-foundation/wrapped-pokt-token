@@ -1,5 +1,6 @@
 const { deploy } = require('./buidler/cli')
 
+require('@nomiclabs/hardhat-etherscan')
 require('@nomiclabs/hardhat-truffle5')
 
 task('deploy', 'Deploy wPOKT')
