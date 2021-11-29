@@ -1,5 +1,6 @@
 const { ecsign, ecrecover } = require('ethereumjs-util')
 const { keccak256 } = require('web3-utils')
+const truffleAssert = require('truffle-assertions')
 const { bn, MAX_UINT256, ZERO_ADDRESS } = require('@aragon/contract-helpers-test')
 const { assertBn, assertEvent, assertRevert } = require('@aragon/contract-helpers-test/src/asserts')
 const { createDomainSeparator } = require('./helpers/erc712')
@@ -84,11 +85,11 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
 
     context('not minter', () => {
       it('cannot mint tokens', async () => {
-        await assertRevert(wpokt.mint(newHolder, tokenAmount(100), { from: holder1 }), 'wPOKT:NOT_MINTER')
+        await truffleAssert.fails(wpokt.mint(newHolder, tokenAmount(100), { from: holder1 }), 'wPOKT:NOT_MINTER')
       })
 
       it('cannot change minter', async () => {
-        await assertRevert(wpokt.changeMinter(newMinter, { from: holder1 }), 'wPOKT:NOT_MINTER')
+        await truffleAssert.fails(wpokt.changeMinter(newMinter, { from: holder1 }), 'wPOKT:NOT_MINTER')
       })
     })
   })
@@ -118,21 +119,21 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
       })
 
       it('cannot transfer above balance', async () => {
-        await assertRevert(
+        await truffleAssert.fails(
           wpokt.transfer(newHolder, (await wpokt.balanceOf(holder1)).add(bn('1')), { from: holder1 }),
           'MATH:SUB_UNDERFLOW'
         )
       })
 
       it('cannot transfer to token', async () => {
-        await assertRevert(
+        await truffleAssert.fails(
           wpokt.transfer(wpokt.address, bn('1'), { from: holder1 }),
           'wPOKT:RECEIVER_IS_TOKEN_OR_ZERO'
         )
       })
 
       it('cannot transfer to zero address', async () => {
-        await assertRevert(
+        await truffleAssert.fails(
           wpokt.transfer(ZERO_ADDRESS, bn('1'), { from: holder1 }),
           'wPOKT:RECEIVER_IS_TOKEN_OR_ZERO'
         )
@@ -141,7 +142,7 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
 
     context('bagless', () => {
       it('cannot transfer any', async () => {
-        await assertRevert(
+        await truffleAssert.fails(
           wpokt.transfer(holder1, bn('1'), { from: newHolder }),
           'MATH:SUB_UNDERFLOW'
         )
@@ -190,21 +191,21 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
       })
 
       it('cannot transfer above balance', async () => {
-        await assertRevert(
+        await truffleAssert.fails(
           wpokt.transferFrom(owner, spender, value.add(bn('1')), { from: spender }),
           'MATH:SUB_UNDERFLOW'
         )
       })
 
       it('cannot transfer to token', async () => {
-        await assertRevert(
+        await truffleAssert.fails(
           wpokt.transferFrom(owner, wpokt.address, bn('1'), { from: spender }),
           'wPOKT:RECEIVER_IS_TOKEN_OR_ZERO'
         )
       })
 
       it('cannot transfer to zero address', async () => {
-        await assertRevert(
+        await truffleAssert.fails(
           wpokt.transferFrom(owner, ZERO_ADDRESS, bn('1'), { from: spender }),
           'wPOKT:RECEIVER_IS_TOKEN_OR_ZERO'
         )
@@ -237,7 +238,7 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
       })
 
       it('cannot transfer above balance', async () => {
-        await assertRevert(
+        await truffleAssert.fails(
           wpokt.transferFrom(owner, spender, (await wpokt.balanceOf(owner)).add(bn('1')), { from: spender }),
           'MATH:SUB_UNDERFLOW'
         )
@@ -253,7 +254,7 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
       })
 
       it('cannot transfer', async () => {
-        await assertRevert(
+        await truffleAssert.fails(
           wpokt.transferFrom(owner, spender, bn('1'), { from: spender }),
           'MATH:SUB_UNDERFLOW'
         )
@@ -286,7 +287,7 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
       })
 
       it('cannot burn above balance', async () => {
-        await assertRevert(
+        await truffleAssert.fails(
           wpokt.burn((await wpokt.balanceOf(holder1)).add(bn('1')), { from: holder1 }),
           'MATH:SUB_UNDERFLOW'
         )
@@ -295,7 +296,7 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
 
     context('bagless', () => {
       it('cannot burn any', async () => {
-        await assertRevert(
+        await truffleAssert.fails(
           wpokt.burn(bn('1'), { from: newHolder }),
           'MATH:SUB_UNDERFLOW'
         )
@@ -397,7 +398,7 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
       const secondSig = await createPermitSignature(owner, spender, secondValue, nonce, deadline)
 
       // Use a mismatching signature
-      await assertRevert(wpokt.permit(owner, spender, firstValue, deadline, secondSig.v, secondSig.r, secondSig.s), 'wPOKT:INVALID_SIGNATURE')
+      await truffleAssert.fails(wpokt.permit(owner, spender, firstValue, deadline, secondSig.v, secondSig.r, secondSig.s), 'wPOKT:INVALID_SIGNATURE')
     })
 
     it('cannot use expired permit', async () => {
@@ -409,7 +410,7 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
       const deadline = now.sub(bn(60))
 
       const { r, s, v } = await createPermitSignature(owner, spender, value, nonce, deadline)
-      await assertRevert(wpokt.permit(owner, spender, value, deadline, v, r, s), 'wPOKT:AUTH_EXPIRED')
+      await truffleAssert.fails(wpokt.permit(owner, spender, value, deadline, v, r, s), 'wPOKT:AUTH_EXPIRED')
     })
 
     it('cannot use surpassed permit', async () => {
@@ -424,7 +425,7 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
 
       // Using one should disallow the other
       await wpokt.permit(owner, spender, secondValue, deadline, secondSig.v, secondSig.r, secondSig.s)
-      await assertRevert(wpokt.permit(owner, spender, firstValue, deadline, firstSig.v, firstSig.r, firstSig.s), 'wPOKT:INVALID_SIGNATURE')
+      await truffleAssert.fails(wpokt.permit(owner, spender, firstValue, deadline, firstSig.v, firstSig.r, firstSig.s), 'wPOKT:INVALID_SIGNATURE')
     })
   })
 
@@ -490,7 +491,7 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
       const validBefore = MAX_UINT256
 
       const { r, s, v } = await createTransferWithAuthorizationSignature(from, to, value, validAfter, validBefore, nonce)
-      await assertRevert(
+      await truffleAssert.fails(
         wpokt.transferWithAuthorization(from, to, value, validAfter, validBefore, nonce, v, r, s),
         'MATH:SUB_UNDERFLOW'
       )
@@ -503,7 +504,7 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
       const validBefore = MAX_UINT256
 
       const { r, s, v } = await createTransferWithAuthorizationSignature(from, wpokt.address, value, validAfter, validBefore, nonce)
-      await assertRevert(
+      await truffleAssert.fails(
         wpokt.transferWithAuthorization(from, wpokt.address, value, validAfter, validBefore, nonce, v, r, s),
         'wPOKT:RECEIVER_IS_TOKEN_OR_ZERO'
       )
@@ -516,7 +517,7 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
       const validBefore = MAX_UINT256
 
       const { r, s, v } = await createTransferWithAuthorizationSignature(from, ZERO_ADDRESS, value, validAfter, validBefore, nonce)
-      await assertRevert(
+      await truffleAssert.fails(
         wpokt.transferWithAuthorization(from, ZERO_ADDRESS, value, validAfter, validBefore, nonce, v, r, s),
         'wPOKT:RECEIVER_IS_TOKEN_OR_ZERO'
       )
@@ -535,7 +536,7 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
       const secondSig = await createTransferWithAuthorizationSignature(from, to, secondValue, validAfter, validBefore, secondNonce)
 
       // Use a mismatching signature
-      await assertRevert(
+      await truffleAssert.fails(
         wpokt.transferWithAuthorization(from, to, firstValue, validAfter, validBefore, firstNonce, secondSig.v, secondSig.r, secondSig.s),
         'wPOKT:INVALID_SIGNATURE'
       )
@@ -551,7 +552,7 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
       const validBefore = MAX_UINT256
 
       const { r, s, v } = await createTransferWithAuthorizationSignature(from, to, value, validAfter, validBefore, nonce)
-      await assertRevert(
+      await truffleAssert.fails(
         wpokt.transferWithAuthorization(from, to, value, validAfter, validBefore, nonce, v, r, s),
         'wPOKT:AUTH_NOT_YET_VALID'
       )
@@ -567,7 +568,7 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
       const validAfter = 0
 
       const { r, s, v } = await createTransferWithAuthorizationSignature(from, to, value, validAfter, validBefore, nonce)
-      await assertRevert(
+      await truffleAssert.fails(
         wpokt.transferWithAuthorization(from, to, value, validAfter, validBefore, nonce, v, r, s),
         'wPOKT:AUTH_EXPIRED'
       )
@@ -585,7 +586,7 @@ contract('wPOKT', ([_, minter, newMinter, holder1, holder2, newHolder]) => {
 
       // Using one should disallow the other
       await wpokt.transferWithAuthorization(from, to, firstValue, validAfter, validBefore, nonce, firstSig.v, firstSig.r, firstSig.s)
-      await assertRevert(
+      await truffleAssert.fails(
         wpokt.transferWithAuthorization(from, to, secondValue, validAfter, validBefore, nonce, secondSig.v, secondSig.r, secondSig.s),
         'wPOKT:AUTH_ALREADY_USED'
       )

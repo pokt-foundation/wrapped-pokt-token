@@ -1,5 +1,7 @@
 const { deploy } = require('./buidler/cli')
 
+require('@nomiclabs/hardhat-truffle5')
+
 task('deploy', 'Deploy wPOKT')
   .addParam('minter', 'wPOKT minter')
   .setAction(deploy)
